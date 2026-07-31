@@ -1,29 +1,31 @@
-# Cappelli-ChatGPT
+# Diccionario Cappelli de abreviaturas latinas
 
-Web app for browsing Cappelli's dictionary of Latin abbreviations.
+Una pequeña aplicación web para buscar en el diccionario Cappelli de abreviaturas latinas.
 
-Data source: https://www.adfontes.uzh.ch/en/ressourcen/abkuerzungen/cappelli-daten-zum-download
+Fuente de los datos: https://www.adfontes.uzh.ch/en/ressourcen/abkuerzungen/cappelli-daten-zum-download
+
+Basado en el concepto [Capelli-ChatGPT](https://github.com/ciceronianus/Cappelli-ChatGPT) de [ciceronianus](https://github.com/ciceronianus)
 
 ## Stack
 
 - SvelteKit
 - Tailwind CSS
-- Flowbite Svelte (including dark / light mode)
+- Flowbite Svelte (modo oscuro / claro)
 
-## Development
+## Desarrollo
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Build
+## Construir
 
 ```bash
 npm run build
 npm run preview
 ```
 
-Uses `@sveltejs/adapter-static`. Output is written to `build/`.
+Usa `@sveltejs/adapter-static`. El proyecto se escribe en `build/`.
 
-Dictionary data lives in `static/abbreviations.json`. Abbreviation images live in `static/img_abbr/`.
+Los datos del diccionario están en `static/abbreviations.json`. las imágenes de las abreviaturas en `static/img_abbr/`.
