@@ -28,4 +28,4 @@ npm run preview
 
 Usa `@sveltejs/adapter-static`. El proyecto se escribe en `build/`.
 
-Los datos del diccionario están en `static/abbreviations.json`. las imágenes de las abreviaturas en `static/img_abbr/`.
+Los datos del diccionario están en `static/abbr.json`. Las imágenes están en `static/img_abbr/`. Las traducciones de categorías (alemán → español) están en `static/cat.json` (generado desde `static/cat.csv` con `npm run build:cat`).

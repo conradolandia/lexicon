@@ -1,7 +1,7 @@
 {
-	"name": "cappelli-chatgpt",
+	"name": "cappelli-svelte",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -9,7 +9,8 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"build:cat": "node scripts/build-cat-json.mjs"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^3.0.10",
@@ -25,14 +26,20 @@
 		"typescript": "^6.0.3",
 		"vite": "^8.0.16"
 	},
-	"description": "Cappelli's Dictionary of Latin Abbreviations web app",
-	"homepage": "https://github.com/conradolandia/Cappelli-ChatGPT#readme",
+	"description": "Diccionario de abreviaturas de Cappelli, web app",
+	"homepage": "https://github.com/conradolandia/Cappelli-Svelte#readme",
 	"bugs": {
-		"url": "https://github.com/conradolandia/Cappelli-ChatGPT/issues"
+		"url": "https://github.com/conradolandia/Cappelli-Svelte/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/conradolandia/Cappelli-ChatGPT.git"
+		"url": "git+https://github.com/conradolandia/Cappelli-Svelte.git"
 	},
-	"license": "ISC"
+	"license": "ISC",
+	"overrides": {
+		"cookie": "^0.7.2"
+	},
+	"dependencies": {
+		"convert-csv-to-json": "^4.66.0"
+	}
 }
