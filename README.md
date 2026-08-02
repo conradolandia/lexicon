@@ -27,5 +27,7 @@ npm run preview
 Usa `@sveltejs/adapter-static`. El proyecto se escribe en `build/`.
 
 Los datos del diccionario están en `static/abbr.json`. Las imágenes están en `static/img_abbr/{id}.webp` (ruta y extensión configurables en `src/lib/images.ts`). Las traducciones de categorías (alemán → español) están en `static/cat.json`.
+
 ----
+
 Realizado usando asistencia de IA con Cursor-IDE
