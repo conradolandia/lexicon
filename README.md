@@ -1,4 +1,6 @@
-# Capelino: diccionario Cappelli de abreviaturas latinas, versión web
+# Lexicon abbreviaturarum
+
+Lexicon abbreviaturarum, o diccionario Cappelli de abreviaturas latinas, en versión web
 
 Una pequeña aplicación web para buscar en el diccionario Cappelli de abreviaturas latinas. 
 
@@ -34,4 +36,4 @@ Fuente de los datos: [AdFontes - Capelli: Downloadable Data](https://www.adfonte
 
 ----
 
-Realizado con la asistencia de Cursor IDE.
+Realizado con la asistencia de Cursor IDE. Basado en un experimento de [ciceronianus](https://github.com/ciceronianus).
