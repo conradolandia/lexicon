@@ -1,10 +1,8 @@
-# Diccionario Cappelli de abreviaturas latinas
+# Capelino: diccionario Cappelli de abreviaturas latinas, versión web
 
-Una pequeña aplicación web para buscar en el diccionario Cappelli de abreviaturas latinas.
+Una pequeña aplicación web para buscar en el diccionario Cappelli de abreviaturas latinas. Inspirado en el proyecto [AdFontes](https://www.adfontes.uzh.ch/en/).
 
-Fuente de los datos: https://www.adfontes.uzh.ch/en/ressourcen/abkuerzungen/cappelli-daten-zum-download
-
-Basado en el concepto [Capelli-ChatGPT](https://github.com/ciceronianus/Cappelli-ChatGPT) de [ciceronianus](https://github.com/ciceronianus)
+Fuente de los datos: [AdFontes](https://www.adfontes.uzh.ch/en/ressourcen/abkuerzungen/cappelli-daten-zum-download).
 
 ## Stack
 
@@ -28,4 +26,6 @@ npm run preview
 
 Usa `@sveltejs/adapter-static`. El proyecto se escribe en `build/`.
 
-Los datos del diccionario están en `static/abbr.json`. Las imágenes están en `static/img_abbr/{id}.webp` (ruta y extensión configurables en `src/lib/images.ts`). Las traducciones de categorías (alemán → español) están en `static/cat.json` (generado desde `static/cat.csv` con `npm run build:cat`).
+Los datos del diccionario están en `static/abbr.json`. Las imágenes están en `static/img_abbr/{id}.webp` (ruta y extensión configurables en `src/lib/images.ts`). Las traducciones de categorías (alemán → español) están en `static/cat.json`.
+----
+Realizado usando asistencia de IA con Cursor-IDE
