@@ -5,6 +5,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+	--font-serif:
+		'Source Serif 4', ui-serif, Georgia, 'Times New Roman', serif;
+
 	--color-primary-50: #fff5f2;
 	--color-primary-100: #fff1ee;
 	--color-primary-200: #ffe4de;
@@ -32,6 +35,10 @@
 @source '../../node_modules/flowbite-svelte-icons/dist';
 
 @layer base {
+	html {
+		font-family: var(--font-serif);
+	}
+
 	input[type='search']::-webkit-search-cancel-button {
 		display: none;
 	}

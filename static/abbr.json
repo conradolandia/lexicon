@@ -93380,16 +93380,6 @@
         "image_url": "img_abbr/9408.jpg"
     },
     {
-        "id": 9409,
-        "page_id": 183,
-        "characters": "int[a]",
-        "transcription": "interrogata",
-        "category": null,
-        "period": "XII m.",
-        "language": "latin",
-        "image_url": "img_abbr/9409.jpg"
-    },
-    {
         "id": 9410,
         "page_id": 288,
         "characters": "pq[i]res",
@@ -129608,16 +129598,6 @@
         "period": "XIII p.",
         "language": "latin",
         "image_url": "img_abbr/13054.jpg"
-    },
-    {
-        "id": 13055,
-        "page_id": 252,
-        "characters": "opp[tn]",
-        "transcription": "oppositum",
-        "category": null,
-        "period": "XIV f",
-        "language": "latin",
-        "image_url": "img_abbr/13055.jpg"
     },
     {
         "id": 13056,

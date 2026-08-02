@@ -15,11 +15,6 @@ export function filterAbbreviations(
 	});
 }
 
-export function imageSrc(imageUrl: string | null): string | undefined {
-	if (!imageUrl) return undefined;
-	return imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
-}
-
 export function uniqueCategories(abbreviations: Abbreviation[]): string[] {
 	const categories = new Set<string>();
 	for (const abbr of abbreviations) {

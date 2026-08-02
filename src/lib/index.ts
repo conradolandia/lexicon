@@ -8,6 +8,15 @@ export {
 export {
 	filterAbbreviations,
 	filterByCategory,
-	imageSrc,
 	uniqueCategories
 } from './search';
+export { abbreviationImageSrc, IMAGE_DIR, IMAGE_EXT } from './images';
+export {
+	clearSearchHistory,
+	loadSearchHistory,
+	pushSearchHistory,
+	removeSearchHistoryItem,
+	SEARCH_HISTORY_MAX
+} from './searchHistory';
+export { loadDictionary } from './dictionary';
+export type { DictionaryData } from './dictionary';

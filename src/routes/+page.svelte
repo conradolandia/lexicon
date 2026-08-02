@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Alert, Badge, Button, Search, Spinner } from 'flowbite-svelte';
+	import { Alert, Button, Spinner } from 'flowbite-svelte';
 	import AbbreviationCard from '$lib/components/AbbreviationCard.svelte';
-	import { sortCategoriesByLabel, translateCategory } from '$lib/categories';
+	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
+	import SearchField from '$lib/components/SearchField.svelte';
+	import { sortCategoriesByLabel } from '$lib/categories';
 	import type { CategoryLabels } from '$lib/categories';
+	import { loadDictionary } from '$lib/dictionary';
 	import { filterAbbreviations, filterByCategory, uniqueCategories } from '$lib/search';
 	import type { Abbreviation } from '$lib/types';
 
@@ -28,18 +31,9 @@
 
 	onMount(async () => {
 		try {
-			const [abbrResponse, catResponse] = await Promise.all([
-				fetch('/abbr.json'),
-				fetch('/cat.json')
-			]);
-			if (!abbrResponse.ok) {
-				throw new Error(`No se pudo cargar el diccionario (${abbrResponse.status})`);
-			}
-			if (!catResponse.ok) {
-				throw new Error(`No se pudieron cargar las categorías (${catResponse.status})`);
-			}
-			abbreviations = await abbrResponse.json();
-			categoryLabels = await catResponse.json();
+			const data = await loadDictionary();
+			abbreviations = data.abbreviations;
+			categoryLabels = data.categoryLabels;
 		} catch (error) {
 			loadError =
 				error instanceof Error ? error.message : 'No se pudo cargar el diccionario';
@@ -48,34 +42,25 @@
 		}
 	});
 
-	function runSearch() {
+	function onSearch(term: string) {
+		searchTerm = term;
 		hasSearched = true;
 		visibleCount = PAGE_SIZE;
 		selectedCategory = null;
-		results = filterAbbreviations(abbreviations, searchTerm);
+		results = filterAbbreviations(abbreviations, term);
 	}
 
-	function onSubmit(event: Event) {
-		event.preventDefault();
-		runSearch();
+	function onCategoryChange(_category: string | null) {
+		visibleCount = PAGE_SIZE;
 	}
 
 	function loadMore() {
 		visibleCount += PAGE_SIZE;
 	}
-
-	function selectCategory(category: string | null) {
-		selectedCategory = category;
-		visibleCount = PAGE_SIZE;
-	}
-
-	function categoryChipLabel(category: string): string {
-		return translateCategory(category, categoryLabels) ?? category;
-	}
 </script>
 
 <section class="mb-10">
-	<p class="text-gray-600 dark:text-gray-400 text-2xl font-light">
+	<p class="text-xl font-light text-gray-600 dark:text-gray-400">
 		Busque abreviaturas latinas por caracteres o transcripción.
 	</p>
 </section>
@@ -88,45 +73,15 @@
 {:else if loadError}
 	<Alert color="red">{loadError}</Alert>
 {:else}
-	<form class="mb-6 flex flex-col gap-3 sm:flex-row" onsubmit={onSubmit}>
-		<div class="grow">
-			<Search
-				bind:value={searchTerm}
-				placeholder="Buscar una abreviatura…"
-				size="md"
-				clearable
-				class="w-full"
-			/>
-		</div>
-		<Button type="submit" class="shrink-0">Buscar</Button>
-	</form>
+	<SearchField bind:value={searchTerm} onsearch={onSearch} />
 
 	{#if hasSearched}
-		{#if availableCategories.length > 0}
-			<div class="mb-4">
-				<p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Categorías</p>
-				<div class="flex flex-wrap gap-2">
-					<Badge
-						color={selectedCategory === null ? 'primary' : 'gray'}
-						border={selectedCategory !== null}
-						class="cursor-pointer pt-1 pb-2 px-3"
-						onclick={() => selectCategory(null)}
-					>
-						Todas
-					</Badge>
-					{#each availableCategories as category (category)}
-						<Badge
-							color={selectedCategory === category ? 'primary' : 'gray'}
-							border={selectedCategory !== category}
-							class="cursor-pointer pt-1 pb-2 px-3"
-							onclick={() => selectCategory(category)}
-						>
-							{categoryChipLabel(category)}
-						</Badge>
-					{/each}
-				</div>
-			</div>
-		{/if}
+		<CategoryFilter
+			categories={availableCategories}
+			labels={categoryLabels}
+			bind:selected={selectedCategory}
+			onchange={onCategoryChange}
+		/>
 
 		<p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
 			{#if results.length === 0}

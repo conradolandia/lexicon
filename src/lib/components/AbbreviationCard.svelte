@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card } from 'flowbite-svelte';
 	import { translateCategory } from '$lib/categories';
-	import { imageSrc } from '$lib/search';
+	import { abbreviationImageSrc } from '$lib/images';
 	import type { CategoryLabels } from '$lib/categories';
 	import type { Abbreviation } from '$lib/types';
 
@@ -13,7 +13,7 @@
 		categoryLabels: CategoryLabels;
 	} = $props();
 
-	const img = $derived(imageSrc(abbreviation.image_url));
+	const img = $derived(abbreviationImageSrc(abbreviation.id));
 	const categoryLabel = $derived(
 		translateCategory(abbreviation.category, categoryLabels) ?? 'N/D'
 	);
@@ -37,7 +37,7 @@
 				<dd class="inline">{categoryLabel}</dd>
 			</div>
 			<div>
-				<dt class="inline font-medium">Período:</dt>
+				<dt class="inline font-medium">Siglo:</dt>
 				<dd class="inline">{abbreviation.period || 'N/D'}</dd>
 			</div>
 			<div>

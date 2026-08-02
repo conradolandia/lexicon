@@ -6,5 +6,6 @@ export type Abbreviation = {
 	category: string | null;
 	period: string | null;
 	language: string | null;
-	image_url: string | null;
+	/** @deprecated Ignored; image path is derived from `id` via `$lib/images`. */
+	image_url?: string | null;
 };
