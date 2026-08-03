@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
+	import { Card, Spinner } from 'flowbite-svelte';
 	import { translateCategory } from '$lib/categories';
 	import { ui } from '$lib/content';
 	import { abbreviationImageSrc } from '$lib/images';
@@ -18,13 +18,36 @@
 	const categoryLabel = $derived(
 		translateCategory(abbreviation.category, categoryLabels) ?? ui.fallbackEmpty
 	);
+
+	let loaded = $state(false);
+
+	$effect(() => {
+		void img;
+		loaded = false;
+	});
+
+	function onImageReady(node: HTMLImageElement) {
+		if (node.complete) loaded = true;
+	}
 </script>
 
-<Card
-	img={img}
-	imgClass="object-contain bg-white max-h-24 w-full"
-	class="max-w-none"
->
+<Card class="max-w-none overflow-hidden p-0">
+	<div class="relative flex h-24 w-full items-center justify-center rounded-t-lg bg-white">
+		{#if !loaded}
+			<Spinner size="6" class="absolute" />
+		{/if}
+		<img
+			src={img}
+			alt=""
+			loading="lazy"
+			class="max-h-24 w-full object-contain transition-opacity {loaded
+				? 'opacity-100'
+				: 'opacity-0'}"
+			onload={() => (loaded = true)}
+			onerror={() => (loaded = true)}
+			{@attach onImageReady}
+		/>
+	</div>
 	<div class="p-4">
 		<h5 class="mb-3 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
 			{abbreviation.characters || ui.fallbackEmpty}
