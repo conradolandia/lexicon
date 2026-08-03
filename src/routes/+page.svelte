@@ -6,6 +6,7 @@
 	import SearchField from '$lib/components/SearchField.svelte';
 	import { sortCategoriesByLabel } from '$lib/categories';
 	import type { CategoryLabels } from '$lib/categories';
+	import { t, ui } from '$lib/content';
 	import { loadDictionary } from '$lib/dictionary';
 	import { filterAbbreviations, filterByCategory, uniqueCategories } from '$lib/search';
 	import type { Abbreviation } from '$lib/types';
@@ -35,8 +36,7 @@
 			abbreviations = data.abbreviations;
 			categoryLabels = data.categoryLabels;
 		} catch (error) {
-			loadError =
-				error instanceof Error ? error.message : 'No se pudo cargar el diccionario';
+			loadError = error instanceof Error ? error.message : ui.loadDictionaryFailed;
 		} finally {
 			loading = false;
 		}
@@ -61,14 +61,14 @@
 
 <section class="mb-10">
 	<p class="text-xl font-light text-gray-600 dark:text-gray-400">
-		Busque abreviaturas latinas por caracteres o transcripción.
+		{ui.homeTagline}
 	</p>
 </section>
 
 {#if loading}
 	<div class="flex items-center gap-3 text-gray-600 dark:text-gray-300">
 		<Spinner size="6" />
-		<span>Cargando diccionario…</span>
+		<span>{ui.loadingDictionary}</span>
 	</div>
 {:else if loadError}
 	<Alert color="red">{loadError}</Alert>
@@ -85,12 +85,16 @@
 
 		<p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
 			{#if results.length === 0}
-				No se encontraron coincidencias.
+				{ui.noMatches}
 			{:else if filteredResults.length === 0}
-				No hay resultados en esta categoría.
+				{ui.noMatchesInCategory}
 			{:else}
-				Mostrando {visibleResults.length} de {filteredResults.length}
-				{filteredResults.length === 1 ? 'resultado' : 'resultados'}.
+				{t(ui.resultsCount, {
+					visible: visibleResults.length,
+					total: filteredResults.length,
+					resultsWord:
+						filteredResults.length === 1 ? ui.resultSingular : ui.resultPlural
+				})}
 			{/if}
 		</p>
 
@@ -102,7 +106,7 @@
 
 		{#if canLoadMore}
 			<div class="mt-6 flex justify-center">
-				<Button color="alternative" onclick={loadMore}>Cargar más</Button>
+				<Button color="alternative" onclick={loadMore}>{ui.loadMore}</Button>
 			</div>
 		{/if}
 	{/if}

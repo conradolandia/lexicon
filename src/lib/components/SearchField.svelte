@@ -2,6 +2,7 @@
 	import { onMount, tick } from 'svelte';
 	import { Button, Search } from 'flowbite-svelte';
 	import { ClockOutline, CloseOutline, TrashBinOutline } from 'flowbite-svelte-icons';
+	import { t, ui } from '$lib/content';
 	import {
 		clearSearchHistory,
 		loadSearchHistory,
@@ -165,7 +166,7 @@
 		<Search
 			bind:value
 			bind:elementRef={searchInput}
-			placeholder="Buscar una abreviatura…"
+			placeholder={ui.searchPlaceholder}
 			size="md"
 			clearable
 			clearableOnClick={onClearSearch}
@@ -186,14 +187,14 @@
 				id="search-history-listbox"
 				role="listbox"
 				tabindex="-1"
-				aria-label="Búsquedas recientes"
+				aria-label={ui.searchHistoryLabel}
 				class="absolute z-20 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-600 dark:bg-gray-800"
 				onmousedown={(event) => event.preventDefault()}
 			>
 				<p
 					class="px-3 pt-2 pb-1 text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-400"
 				>
-					Búsquedas recientes
+					{ui.searchHistoryLabel}
 				</p>
 				<ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
 					{#each searchHistory as term, index (term)}
@@ -215,7 +216,7 @@
 								type="button"
 								tabindex="-1"
 								class="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200"
-								aria-label="Eliminar «{term}» del historial"
+								aria-label={t(ui.searchHistoryRemove, { term })}
 								onclick={(event) => removeHistoryTerm(event, term)}
 							>
 								<CloseOutline class="h-3.5 w-3.5" />
@@ -234,12 +235,12 @@
 							onclick={clearHistory}
 						>
 							<TrashBinOutline class="h-4 w-4" />
-							Borrar historial
+							{ui.searchHistoryClear}
 						</button>
 					</li>
 				</ul>
 			</div>
 		{/if}
 	</div>
-	<Button type="submit" class="shrink-0">Buscar</Button>
+	<Button type="submit" class="shrink-0">{ui.searchButton}</Button>
 </form>

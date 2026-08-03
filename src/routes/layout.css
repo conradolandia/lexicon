@@ -43,3 +43,30 @@
 		display: none;
 	}
 }
+
+@layer components {
+	.content-md a {
+		font-weight: 500;
+		color: var(--color-primary-700);
+		text-decoration: underline;
+	}
+
+	.content-md a:hover {
+		text-decoration: none;
+	}
+
+	.dark .content-md a {
+		color: var(--color-primary-400);
+	}
+
+	.content-md code {
+		border-radius: 0.25rem;
+		background-color: var(--color-gray-100, #f3f4f6);
+		padding: 0.125rem 0.25rem;
+		font-size: 0.875rem;
+	}
+
+	.dark .content-md code {
+		background-color: var(--color-gray-800, #1f2937);
+	}
+}

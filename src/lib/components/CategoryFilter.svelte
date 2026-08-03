@@ -2,6 +2,7 @@
 	import { Badge } from 'flowbite-svelte';
 	import { translateCategory } from '$lib/categories';
 	import type { CategoryLabels } from '$lib/categories';
+	import { ui } from '$lib/content';
 
 	let {
 		categories,
@@ -27,7 +28,7 @@
 
 {#if categories.length > 0}
 	<div class="mb-4">
-		<p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Categorías</p>
+		<p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">{ui.categoriesHeading}</p>
 		<div class="flex flex-wrap gap-2">
 			<Badge
 				color={selected === null ? 'primary' : 'gray'}
@@ -35,7 +36,7 @@
 				class="cursor-pointer px-4 py-2"
 				onclick={() => select(null)}
 			>
-				Todas
+				{ui.categoriesAll}
 			</Badge>
 			{#each categories as category (category)}
 				<Badge

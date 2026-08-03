@@ -1,3 +1,4 @@
+import { t, ui } from './content';
 import type { CategoryLabels } from './categories';
 import type { Abbreviation } from './types';
 
@@ -13,10 +14,10 @@ export async function loadDictionary(): Promise<DictionaryData> {
 	]);
 
 	if (!abbrResponse.ok) {
-		throw new Error(`No se pudo cargar el diccionario (${abbrResponse.status})`);
+		throw new Error(t(ui.loadDictionaryFailedStatus, { status: abbrResponse.status }));
 	}
 	if (!catResponse.ok) {
-		throw new Error(`No se pudieron cargar las categorías (${catResponse.status})`);
+		throw new Error(t(ui.loadCategoriesFailedStatus, { status: catResponse.status }));
 	}
 
 	const abbreviations: Abbreviation[] = await abbrResponse.json();

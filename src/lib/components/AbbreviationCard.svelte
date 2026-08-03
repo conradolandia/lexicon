@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Card } from 'flowbite-svelte';
 	import { translateCategory } from '$lib/categories';
+	import { ui } from '$lib/content';
 	import { abbreviationImageSrc } from '$lib/images';
 	import type { CategoryLabels } from '$lib/categories';
 	import type { Abbreviation } from '$lib/types';
@@ -15,7 +16,7 @@
 
 	const img = $derived(abbreviationImageSrc(abbreviation.id));
 	const categoryLabel = $derived(
-		translateCategory(abbreviation.category, categoryLabels) ?? 'N/D'
+		translateCategory(abbreviation.category, categoryLabels) ?? ui.fallbackEmpty
 	);
 </script>
 
@@ -26,23 +27,23 @@
 >
 	<div class="p-4">
 		<h5 class="mb-3 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
-			{abbreviation.characters || 'N/D'}
+			{abbreviation.characters || ui.fallbackEmpty}
 		</h5>
 		<p class="mb-4 text-lg font-normal text-gray-600 dark:text-gray-400">
-			{abbreviation.transcription || 'N/D'}
+			{abbreviation.transcription || ui.fallbackEmpty}
 		</p>
 		<dl class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
 			<div>
-				<dt class="inline font-medium">Categoría:</dt>
+				<dt class="inline font-medium">{ui.cardCategory}</dt>
 				<dd class="inline">{categoryLabel}</dd>
 			</div>
 			<div>
-				<dt class="inline font-medium">Siglo:</dt>
-				<dd class="inline">{abbreviation.period || 'N/D'}</dd>
+				<dt class="inline font-medium">{ui.cardPeriod}</dt>
+				<dd class="inline">{abbreviation.period || ui.fallbackEmpty}</dd>
 			</div>
 			<div>
-				<dt class="inline font-medium">Idioma:</dt>
-				<dd class="inline">{abbreviation.language || 'N/D'}</dd>
+				<dt class="inline font-medium">{ui.cardLanguage}</dt>
+				<dd class="inline">{abbreviation.language || ui.fallbackEmpty}</dd>
 			</div>
 		</dl>
 	</div>

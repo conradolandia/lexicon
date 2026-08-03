@@ -20,3 +20,5 @@ export {
 } from './searchHistory';
 export { loadDictionary } from './dictionary';
 export type { DictionaryData } from './dictionary';
+export { about, content, inlineMarkdown, locale, stripMarkdown, t, ui } from './content';
+export type { AboutContent, Content, Locale, UiStrings } from './content';
