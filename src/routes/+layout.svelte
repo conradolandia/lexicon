@@ -11,7 +11,8 @@
 <svelte:head>
 	<link rel="icon" href={favicon} />
 	<title>{ui.siteTitle}</title>
-	<meta name="description" content={stripMarkdown(ui.siteDescription)} />
+	<meta name="description" content={stripMarkdown(ui.siteDescription) + '. ' + ui.pendragonPrefix + ': ' + ui.pendragonName} />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </svelte:head>
 
 <div
