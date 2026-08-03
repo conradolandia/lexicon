@@ -28,7 +28,7 @@
 
 	<div class="flex shrink-0 items-center gap-4 pt-0.5">
 		<a
-			href="/acerca"
+			href="/acerca/"
 			class="whitespace-nowrap font-medium text-gray-900 hover:underline dark:text-white"
 		>
 			{ui.navAbout}
