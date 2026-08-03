@@ -15,11 +15,11 @@
 </svelte:head>
 
 <div
-	class="mx-auto min-h-screen max-w-6xl bg-white text-gray-900 dark:bg-gray-900 dark:text-white"
+	class="mx-auto min-h-screen max-w-6xl bg-white text-gray-900 dark:bg-gray-900 dark:text-white flex flex-col"
 >
 	<SiteHeader />
 
-	<main class="mx-auto max-w-6xl px-4 py-8">
+	<main class="mx-auto w-full px-4 py-8 flex-1">
 		{@render children()}
 	</main>
 
