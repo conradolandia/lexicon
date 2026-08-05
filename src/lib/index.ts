@@ -7,9 +7,13 @@ export {
 } from './categories';
 export {
 	filterAbbreviations,
-	filterByCategory,
-	uniqueCategories
+	hasActiveFilters,
+	uniqueCategories,
+	uniqueLanguages,
+	uniquePeriods
 } from './search';
+export type { SearchCriteria, SearchFields } from './search';
+export { defaultSearchFields } from './search';
 export { abbreviationImageSrc, IMAGE_DIR, IMAGE_EXT } from './images';
 export {
 	clearSearchHistory,

@@ -2,13 +2,20 @@
 	import { onMount } from 'svelte';
 	import { Alert, Button, Spinner } from 'flowbite-svelte';
 	import AbbreviationCard from '$lib/components/AbbreviationCard.svelte';
-	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
+	import AdvancedSearch from '$lib/components/AdvancedSearch.svelte';
 	import SearchField from '$lib/components/SearchField.svelte';
-	import { sortCategoriesByLabel } from '$lib/categories';
+	import { sortCategoriesByLabel, translateCategory } from '$lib/categories';
 	import type { CategoryLabels } from '$lib/categories';
 	import { t, ui } from '$lib/content';
 	import { loadDictionary } from '$lib/dictionary';
-	import { filterAbbreviations, filterByCategory, uniqueCategories } from '$lib/search';
+	import {
+		defaultSearchFields,
+		filterAbbreviations,
+		uniqueCategories,
+		uniqueLanguages,
+		uniquePeriods
+	} from '$lib/search';
+	import type { SearchFields } from '$lib/search';
 	import type { Abbreviation } from '$lib/types';
 
 	const PAGE_SIZE = 24;
@@ -21,14 +28,35 @@
 	let results = $state<Abbreviation[]>([]);
 	let hasSearched = $state(false);
 	let visibleCount = $state(PAGE_SIZE);
-	let selectedCategory = $state<string | null>(null);
 
-	const availableCategories = $derived(
-		sortCategoriesByLabel(uniqueCategories(results), categoryLabels)
+	let searchFields = $state<SearchFields>({ ...defaultSearchFields });
+	let selectedCategories = $state<string[]>([]);
+	let selectedPeriods = $state<string[]>([]);
+	let selectedLanguages = $state<string[]>([]);
+
+	const categoryOptions = $derived(
+		sortCategoriesByLabel(uniqueCategories(abbreviations), categoryLabels).map((value) => ({
+			value,
+			label: translateCategory(value, categoryLabels) ?? value
+		}))
 	);
-	const filteredResults = $derived(filterByCategory(results, selectedCategory));
-	const visibleResults = $derived(filteredResults.slice(0, visibleCount));
-	const canLoadMore = $derived(visibleCount < filteredResults.length);
+	const periodOptions = $derived(
+		uniquePeriods(abbreviations).map((value) => ({ value, label: value }))
+	);
+	const languageOptions = $derived(
+		uniqueLanguages(abbreviations).map((value) => ({
+			value,
+			label:
+				value === 'latin'
+					? ui.languageLatin
+					: value === 'italian'
+						? ui.languageItalian
+						: value
+		}))
+	);
+
+	const visibleResults = $derived(results.slice(0, visibleCount));
+	const canLoadMore = $derived(visibleCount < results.length);
 
 	onMount(async () => {
 		try {
@@ -46,12 +74,13 @@
 		searchTerm = term;
 		hasSearched = true;
 		visibleCount = PAGE_SIZE;
-		selectedCategory = null;
-		results = filterAbbreviations(abbreviations, term);
-	}
-
-	function onCategoryChange(_category: string | null) {
-		visibleCount = PAGE_SIZE;
+		results = filterAbbreviations(abbreviations, {
+			term,
+			fields: searchFields,
+			categories: selectedCategories,
+			periods: selectedPeriods,
+			languages: selectedLanguages
+		});
 	}
 
 	function loadMore() {
@@ -73,27 +102,27 @@
 {:else if loadError}
 	<Alert color="red">{loadError}</Alert>
 {:else}
+	<AdvancedSearch
+		bind:fields={searchFields}
+		bind:categories={selectedCategories}
+		bind:periods={selectedPeriods}
+		bind:languages={selectedLanguages}
+		{categoryOptions}
+		{periodOptions}
+		{languageOptions}
+	/>
+
 	<SearchField bind:value={searchTerm} onsearch={onSearch} />
 
 	{#if hasSearched}
-		<CategoryFilter
-			categories={availableCategories}
-			labels={categoryLabels}
-			bind:selected={selectedCategory}
-			onchange={onCategoryChange}
-		/>
-
 		<p class="mb-4 text-sm text-gray-600 dark:text-gray-400">
 			{#if results.length === 0}
 				{ui.noMatches}
-			{:else if filteredResults.length === 0}
-				{ui.noMatchesInCategory}
 			{:else}
 				{t(ui.resultsCount, {
 					visible: visibleResults.length,
-					total: filteredResults.length,
-					resultsWord:
-						filteredResults.length === 1 ? ui.resultSingular : ui.resultPlural
+					total: results.length,
+					resultsWord: results.length === 1 ? ui.resultSingular : ui.resultPlural
 				})}
 			{/if}
 		</p>
