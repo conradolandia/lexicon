@@ -1,4 +1,5 @@
-import type { Abbreviation } from './types';
+import type { Abbreviation, PositionIndex } from './types';
+import { positionValue } from './types';
 
 export type SearchFields = {
 	characters: boolean;
@@ -11,6 +12,8 @@ export type SearchCriteria = {
 	categories: string[];
 	periods: string[];
 	languages: string[];
+	/** Grid cells 1–9 that must be present (AND). Empty = no position filter. */
+	positions: PositionIndex[];
 };
 
 export const defaultSearchFields: SearchFields = {
@@ -22,7 +25,8 @@ export function hasActiveFilters(criteria: SearchCriteria): boolean {
 	return (
 		criteria.categories.length > 0 ||
 		criteria.periods.length > 0 ||
-		criteria.languages.length > 0
+		criteria.languages.length > 0 ||
+		criteria.positions.length > 0
 	);
 }
 
@@ -49,6 +53,11 @@ function matchesMulti(value: string | null, selected: string[]): boolean {
 	return selected.includes(value);
 }
 
+function matchesPositions(abbr: Abbreviation, positions: PositionIndex[]): boolean {
+	if (positions.length === 0) return true;
+	return positions.every((index) => positionValue(abbr, index) === 1);
+}
+
 export function filterAbbreviations(
 	abbreviations: Abbreviation[],
 	criteria: SearchCriteria
@@ -61,6 +70,7 @@ export function filterAbbreviations(
 		if (!matchesMulti(abbr.category, criteria.categories)) return false;
 		if (!matchesMulti(abbr.period, criteria.periods)) return false;
 		if (!matchesMulti(abbr.language, criteria.languages)) return false;
+		if (!matchesPositions(abbr, criteria.positions)) return false;
 		return true;
 	});
 }

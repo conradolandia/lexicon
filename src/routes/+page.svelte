@@ -16,7 +16,7 @@
 		uniquePeriods
 	} from '$lib/search';
 	import type { SearchFields } from '$lib/search';
-	import type { Abbreviation } from '$lib/types';
+	import type { Abbreviation, PositionIndex } from '$lib/types';
 
 	const PAGE_SIZE = 24;
 
@@ -33,6 +33,7 @@
 	let selectedCategories = $state<string[]>([]);
 	let selectedPeriods = $state<string[]>([]);
 	let selectedLanguages = $state<string[]>([]);
+	let selectedPositions = $state<PositionIndex[]>([]);
 
 	const categoryOptions = $derived(
 		sortCategoriesByLabel(uniqueCategories(abbreviations), categoryLabels).map((value) => ({
@@ -79,7 +80,8 @@
 			fields: searchFields,
 			categories: selectedCategories,
 			periods: selectedPeriods,
-			languages: selectedLanguages
+			languages: selectedLanguages,
+			positions: selectedPositions
 		});
 	}
 
@@ -107,6 +109,7 @@
 		bind:categories={selectedCategories}
 		bind:periods={selectedPeriods}
 		bind:languages={selectedLanguages}
+		bind:positions={selectedPositions}
 		{categoryOptions}
 		{periodOptions}
 		{languageOptions}

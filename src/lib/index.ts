@@ -1,5 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
-export type { Abbreviation } from './types';
+export type { Abbreviation, PositionIndex } from './types';
+export { positionValue } from './types';
 export type { CategoryLabels } from './categories';
 export {
 	sortCategoriesByLabel,
@@ -14,7 +15,14 @@ export {
 } from './search';
 export type { SearchCriteria, SearchFields } from './search';
 export { defaultSearchFields } from './search';
-export { abbreviationImageSrc, IMAGE_DIR, IMAGE_EXT } from './images';
+export {
+	abbreviationImageSrc,
+	pageImageSrc,
+	IMAGE_DIR,
+	IMAGE_EXT,
+	PAGE_IMAGE_DIR,
+	PAGE_IMAGE_WIDTH
+} from './images';
 export {
 	clearSearchHistory,
 	loadSearchHistory,
