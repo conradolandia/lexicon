@@ -44,9 +44,9 @@
   <Accordion flush>
     <AccordionItem open={false}>
       {#snippet header()}{ui.advancedSearchHeading}{/snippet}
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-5 sm:gap-x-6 sm:gap-y-4 pt-2 pb-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-5 md:gap-x-6 md:gap-y-4 pt-2 pb-4">
         <div
-          class="grid grid-cols-1 col-span-3 gap-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-4"
+          class="grid grid-cols-1 col-span-3 gap-4 md:grid-cols-2 md:gap-x-6 md:gap-y-4"
         >
           <div class="flex flex-col gap-1.5">
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
